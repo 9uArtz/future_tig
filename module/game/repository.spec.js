@@ -5,8 +5,12 @@ describe('repository', function () {
     var repository = new Repository();
     beforeEach(function () {
         var map = new Map();
-        repository.store(new Game([1,2,3],map));
-        repository.store(new Game([4,5,6],map));
+        var game1 = new Game(map);
+        for (var i = 1; i < 4; i++) game1.addPlayer(i);
+        var game2 = new Game(map);
+        for (var i = 4; i < 7; i++) game2.addPlayer(i);
+        repository.store(game1);
+        repository.store(game2);
     });
     it('resolve', function () {
         var game1 = repository.resolveByUserId(1);

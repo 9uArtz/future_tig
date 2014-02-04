@@ -1,10 +1,9 @@
 _ = require('underscore');
 
 /**
- * @param {Array} playersIds
  * @param {Map} map
  */
-module.exports = function(playersIds, map) {
+module.exports = function(map) {
     var self = this;
 
     this.players = [];
@@ -12,9 +11,20 @@ module.exports = function(playersIds, map) {
     this.map = map;
 
     var Player = require('./player');
-    playersIds.forEach(function(id){
-        self.players.push(new Player(id));
-    });
+
+    this.addPlayer = function(userId) {
+        this.players.push(new Player(userId));
+    };
+
+    this.removePlayer = function(userId) {
+        for (var i in this.players) {
+            if (this.players[i].id == userId) {
+                this.players.splice(i, 1);
+                return true;
+            }
+        }
+        return false;
+    };
 
     this.changeTurn = function(){
         this.turn = (this.turn >= this.players.length - 1) ? 0 : this.turn + 1 ;
